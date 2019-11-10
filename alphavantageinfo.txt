@@ -1,0 +1,4 @@
+API Key for AlphaVantage: CW3985DDZ00FVGZ5
+Call structure: https://www.alphavantage.co/query?function=MACD&symbol=MSFT&interval=5min&series_type=open&apikey=CW3985DDZ00FVGZ5
+//Can change interval to 1min / daily
+//change symbol to stock ticker
