@@ -3,6 +3,9 @@ import requests, json
 def write_json(stock_name, timeframe):  
     response_macd = requests.get(f'https://www.alphavantage.co/query?function=MACD&symbol={stock_name}&interval={timeframe}&series_type=close&apikey=CW3985DDZ00FVGZ5')
     response_stockprice = requests.get(f'https://www.alphavantage.co/query?function=TIME_SERIES_{timeframe.upper()}&symbol={stock_name}&outputsize=full&apikey=CW3985DDZ00FVGZ5')
+    if len(response_stockprice.text) < 300:
+        print("Reached API call limit, try again in a min")
+        return
     if (response_macd.status_code != 404 or response_stockprice.status_code != 404):
         parsed_macd = response_macd.json()
         parsed_stockprice = response_stockprice.json()
@@ -21,4 +24,5 @@ def write_json(stock_name, timeframe):
 
 ##### Change arguments below and run script #####
 ##### arg1 is ticker symbol, arg2 can be 'daily', 'weekly', 'monthly' #####
-write_json('KMB', 'daily')
+write_json('JPM', 'weekly')
+write_json('JPM', 'daily')
