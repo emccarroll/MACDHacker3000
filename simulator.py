@@ -4,6 +4,13 @@ import json, requests,csv, time
 #1. Scan "bought" list for potential sells, sell, remove from "bought", add trade to profits list
 #2. Scan list of stocks for potential buys, add it to "bought" list
 
+
+#def findRSIGoodSpots():
+    
+
+
+
+
 timeframe = "daily"
 
 #returns list of points where there is a crossover
@@ -145,10 +152,10 @@ def getAvgChange(stockName, apikey):
     
     print(vals) #finds price change hourly
 
-getAvgChange("AMZN","SKY470CWGO52HCSQ")
-getAvgChange("MSFT","SKY470CWGO52HCSQ")
-getAvgChange("AAPL","CW3985DDZ00FVGZ5")
-getAvgChange("FB","CW3985DDZ00FVGZ5")
+# getAvgChange("AMZN","SKY470CWGO52HCSQ")
+# getAvgChange("MSFT","SKY470CWGO52HCSQ")
+# getAvgChange("AAPL","CW3985DDZ00FVGZ5")
+# getAvgChange("FB","CW3985DDZ00FVGZ5")
 # getAvgChange("JPM","N29DY72L98XQRYRB")
 # getAvgChange("GOOG","N29DY72L98XQRYRB")
 
@@ -156,7 +163,8 @@ getAvgChange("FB","CW3985DDZ00FVGZ5")
 
 
 keys = ["SKYA470CWGO52HCSQ","CW3985DDZ00FVGZ5","N29DY72L98XQRYRB"]
-stocks = ["AMZN","MSFT", "APPL", "FB","GOOG"]
+stocks = ["MSFT","AAPL", "AMZN", "FB","GOOG"]
+# stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","TSLA","V","",""]
 i = 0
 count = 0
 # for stock in stocks:
@@ -169,9 +177,9 @@ count = 0
 #         time.sleep(60)
 #         count = 0
 
-# for stock in stocks:
-#     getAvgChange(stock, keys[1])
-#     count +=1
-#     if count >= 2:
-#         time.sleep(61)
-#         count = 0
+for stock in stocks:
+    getAvgChange(stock, keys[1])
+    count +=1
+    if count >= 2:
+        time.sleep(70)
+        count = 0
