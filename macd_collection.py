@@ -44,7 +44,7 @@ def write_json(stock_name, timeframe):
 ##### Change arguments below and run script #####
 ##### arg1 is ticker symbol, arg2 can be 'daily', 'weekly', 'monthly' #####
 
-list = ['LYB', 'KMB', 'JPM', 'JNJ', 'GOOGL', 'GOOG', 'FB', 'AMZN', 'AAPL']
+list = ['MSFT', 'AAPL', 'AMZN', 'FB', 'JPM', 'GOOGL', 'JNJ', 'V', 'PG']
 for name in list:
     #time.sleep(60)
     write_json(name,'daily')
