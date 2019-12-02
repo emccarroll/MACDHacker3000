@@ -5,9 +5,19 @@ import json, requests,csv, time
 #2. Scan list of stocks for potential buys, add it to "bought" list
 
 
-#def findRSIGoodSpots():
-    
+def findRSIGoodSpots(data_set, initialKey):
+   # hello Eoghan
+    goodSpots=[]
+    temp= float(data_set[initialKey]["RSI"])
 
+    for date in data_set:
+        currentRSI=float(data_set[date]["RSI"])
+       
+        if((currentRSI>=70 and temp<70) or (currentRSI<=30 and temp>30)):
+            goodSpots.append(date)
+        temp=currentRSI
+        
+    return goodSpots
 
 
 
@@ -27,6 +37,7 @@ def findCrossovers(data_set, initialKey):
         for date in data_set:
             macd = float(data_set[date]["MACD"])
             signal = float(data_set[date]["MACD_Signal"])
+           
             if(blackabovered!=(macd>signal)):
                 crossoverPoints.append(date)
             blackabovered=macd>signal
@@ -63,6 +74,16 @@ def findAvgPercentChange(data, timesofcrossover, time_change):
     number = 0
     for time in timesofcrossover:
         average = ((average * number) + findPercentChange(data, f"{time}:00", time_change)) /(number + 1)
+        number += 1
+    return average
+
+# finds the average of the change
+def findRSIAvgPercentChange(data, timesofcrossover, time_change):
+    # times of crossover is the key to the data in the dictonary
+    average = 0
+    number = 0
+    for time in timesofcrossover:
+        average = ((average * number) + findPercentChange(data, f"{time}", time_change)) /(number + 1)
         number += 1
     return average
 
@@ -132,7 +153,7 @@ def getAvgChange(stockName, apikey):
     price_response_data = requests.get(f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={stockName}&outputsize=full&interval=60min&apikey={apikey}')
     macd_parsed_data = macd_response_data.json()
     price_parsed_data = price_response_data.json()
-    print("Donkey"+str(price_response_data))
+    
     macd_parsed_data = macd_parsed_data["Technical Analysis: MACD"]
     price_parsed_data = price_parsed_data["Time Series (60min)"]
     #with open(f"StockData/{stock_name}_{timeframe}.json", "r") as json_file:        
@@ -147,6 +168,34 @@ def getAvgChange(stockName, apikey):
             d = findAvgPercentChange(price_parsed_data, crossoverPoints, i)
             csvVals.append(d)
             vals.append("Hour "+ str(i) +": "+ str(d))
+        stock_writer.writerow(csvVals)
+    
+    
+    print(vals) #finds price change hourly
+
+
+
+def getAvgRSIChange(stockName, apikey):
+    rsi_response_data = requests.get(f'https://www.alphavantage.co/query?function=RSI&symbol={stockName}&interval=daily&time_period=14&series_type=open&apikey={apikey}')
+    price_response_data = requests.get(f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stockName}&outputsize=full&interval=60min&apikey={apikey}')
+    rsi_parsed_data = rsi_response_data.json()
+    price_parsed_data = price_response_data.json()
+    
+    rsi_parsed_data = rsi_parsed_data["Technical Analysis: RSI"]
+    price_parsed_data = price_parsed_data["Time Series (Daily)"]
+    #with open(f"StockData/{stock_name}_{timeframe}.json", "r") as json_file:        
+    #    data_set = json.load(json_file)    
+    crossoverPoints=findRSIGoodSpots(rsi_parsed_data, "2019-11-29")
+    vals = []
+    csvVals = [stockName]
+    with open('stockRSIData.csv', mode='a+') as stockData:
+        stock_writer = csv.writer(stockData, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        
+        for i in range(1,6):
+            d = findRSIAvgPercentChange(price_parsed_data, crossoverPoints, i)
+            csvVals.append(d)
+            vals.append("Day "+ str(i) +": "+ str(d))
+            
         stock_writer.writerow(csvVals)
     
     
@@ -178,7 +227,7 @@ count = 0
 #         count = 0
 
 for stock in stocks:
-    getAvgChange(stock, keys[1])
+    getAvgRSIChange(stock, keys[2])
     count +=1
     if count >= 2:
         time.sleep(70)
