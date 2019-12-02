@@ -31,9 +31,11 @@ def write_json(stock_name, timeframe):
             dict[date]['RSI'] = RSI_data[date]['RSI']
             closing_price = stock_data[date]["4. close"]
             dict[date]["price"] = closing_price
-        text_file = open(f"StockData/{stock_name}_{timeframe}.json", "w")
-        text_file.write(str(dict))
-        text_file.close()
+        #text_file = open(f"StockData/{stock_name}_{timeframe}.json", "w")
+        #text_file.write(str(dict))
+        #text_file.close()
+        with open(f"StockData/{stock_name}_{timeframe}.json", "w") as fp:
+           json.dump(dict,fp)
         print(f'Successfully wrote {stock_name}_{timeframe}.json')
     else:
         print('Error code 404')
@@ -44,7 +46,7 @@ def write_json(stock_name, timeframe):
 
 list = ['LYB', 'KMB', 'JPM', 'JNJ', 'GOOGL', 'GOOG', 'FB', 'AMZN', 'AAPL']
 for name in list:
-    time.sleep(60)
+    #time.sleep(60)
     write_json(name,'daily')
     time.sleep(60)
     write_json(name,'weekly')
