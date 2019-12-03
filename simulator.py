@@ -158,10 +158,13 @@ def getAvgChange(stockName, apikey):
     price_parsed_data = price_parsed_data["Time Series (60min)"]
     #with open(f"StockData/{stock_name}_{timeframe}.json", "r") as json_file:        
     #    data_set = json.load(json_file)    
-    crossoverPoints=findCrossovers(macd_parsed_data, "2019-11-29 13:00")
+    try:
+        crossoverPoints=findCrossovers(macd_parsed_data, "2019-11-29 13:00")
+    except:
+        crossoverPoints=findCrossovers(macd_parsed_data, "2019-11-29 12:30")
     vals = []
     csvVals = [stockName]
-    with open('stockData.csv', mode='a+') as stockData:
+    with open('highVolatilityStockData.csv', mode='a+') as stockData:
         stock_writer = csv.writer(stockData, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         
         for i in range(1,6):
@@ -212,8 +215,8 @@ def getAvgRSIChange(stockName, apikey):
 
 
 keys = ["SKYA470CWGO52HCSQ","CW3985DDZ00FVGZ5","N29DY72L98XQRYRB"]
-stocks = ["MSFT","AAPL", "AMZN", "FB","GOOG"]
-# stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","TSLA","V","",""]
+#high volatility: stocks = ["BIMI","SAEX","BRN","ONTX","CANF","SRRA","YTEN","NAVB","TKKS","PT","NK","LXRX","SQNS","CRTX","HFFG","AKER","GLMD","JG","CBLI","VBIV","RAPT","EVLO","AKTX","ADXS","PDSB"]
+stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","V","PG","XOM","BAC","T","DIS","UNH","MA","INTC","VZ","HD","CVX","WFC","PFE","KO","CMCSA","BA","CSCO","PEP","C","WMT","ABT","ADBE","MDT"]
 i = 0
 count = 0
 # for stock in stocks:
@@ -226,9 +229,13 @@ count = 0
 #         time.sleep(60)
 #         count = 0
 
+<<<<<<< HEAD
 for stock in stocks:
     getAvgRSIChange(stock, keys[2])
     count +=1
     if count >= 2:
         time.sleep(70)
         count = 0
+=======
+    count +=1
+>>>>>>> 291b924ee36c1baf3dede5d4257da3dcfd61bd51
