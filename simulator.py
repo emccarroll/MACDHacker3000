@@ -216,7 +216,11 @@ def getAvgRSIChange(stockName, apikey):
 
 keys = ["SKYA470CWGO52HCSQ","CW3985DDZ00FVGZ5","N29DY72L98XQRYRB"]
 #high volatility: stocks = ["BIMI","SAEX","BRN","ONTX","CANF","SRRA","YTEN","NAVB","TKKS","PT","NK","LXRX","SQNS","CRTX","HFFG","AKER","GLMD","JG","CBLI","VBIV","RAPT","EVLO","AKTX","ADXS","PDSB"]
-stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","V","PG","XOM","BAC","T","DIS","UNH","MA","INTC","VZ","HD","CVX","WFC","PFE","KO","CMCSA","BA","CSCO","PEP","C","WMT","ABT","ADBE","MDT"]
+#stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","V","PG","XOM","BAC","T","DIS","UNH","MA","INTC","VZ","HD","CVX","WFC","PFE","KO","CMCSA","BA","CSCO","PEP","C","WMT","ABT","ADBE","MDT"]
+smallcapstocks = ["AJRD","ASNA","BGG","CATO","CROX","DSPG","SSP",
+                    "FOE","FORR","GIII","GFF","HAFC","FIX","CPSI",
+                    "CENTA","CATM","PLCE","CORT","DDD","EGHT","ABM",
+                    "ALG","AMPH","BCC","CRCM","B","DIOD","EHTH","GHL","HWKN"]
 i = 0
 count = 0
 # for stock in stocks:
@@ -229,13 +233,10 @@ count = 0
 #         time.sleep(60)
 #         count = 0
 
-<<<<<<< HEAD
-for stock in stocks:
-    getAvgRSIChange(stock, keys[2])
+for stock in smallcapstocks:
+    getAvgRSIChange(stock, keys[1])
     count +=1
     if count >= 2:
-        time.sleep(70)
+        time.sleep(60)
         count = 0
-=======
     count +=1
->>>>>>> 291b924ee36c1baf3dede5d4257da3dcfd61bd51
