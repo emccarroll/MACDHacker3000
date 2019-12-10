@@ -140,10 +140,10 @@ def getAvgChange(stockName, apikey):
     crossoverPoints=findCrossovers(macd_parsed_data, "2019-11-29 13:00")
     vals = []
     csvVals = [stockName]
-    with open('stockData.csv', mode='a+') as stockData:
+    with open('smallCapStockData.csv', mode='a+') as stockData:
         stock_writer = csv.writer(stockData, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         
-        for i in range(1,6):
+        for i in range(1,25):
             d = findAvgPercentChange(price_parsed_data, crossoverPoints, i)
             csvVals.append(d)
             vals.append("Hour "+ str(i) +": "+ str(d))
@@ -165,6 +165,11 @@ def getAvgChange(stockName, apikey):
 keys = ["SKYA470CWGO52HCSQ","CW3985DDZ00FVGZ5","N29DY72L98XQRYRB"]
 stocks = ["MSFT","AAPL", "AMZN", "FB","GOOG"]
 # stocks = ["MSFT","AAPL", "AMZN", "FB","JPM","GOOGL","JNJ","TSLA","V","",""]
+# smallcapstocks = ["AJRD","ASNA","BGG","CATO","CROX","DSPG","SSP",
+#                     "FOE","FORR","GIII","GFF","HAFC","FIX","CPSI",
+#                     "CENTA","CATM","PLCE","CORT","DDD","EGHT","ABM",
+#                     "ALG","AMPH","BCC","CRCM","B","DIOD","EHTH","GHL","HWKN"]
+smallcapstocks = ["IJR"]
 i = 0
 count = 0
 # for stock in stocks:
@@ -177,9 +182,9 @@ count = 0
 #         time.sleep(60)
 #         count = 0
 
-for stock in stocks:
+for stock in smallcapstocks:
     getAvgChange(stock, keys[1])
     count +=1
     if count >= 2:
-        time.sleep(70)
+        time.sleep(60)
         count = 0
